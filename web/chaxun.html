@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JS基础——修改文本框的值(函数传参)</title>
+    <style>
+    *{ padding: 0; margin: 0;}
+    body{ font-size: 12px; color: #333; background: #fff;}
+    li{ list-style: none;}
+    a{ text-decoration: none; color: #333;}
+    #cate{ width: 300px; margin: 40px auto; border: 1px solid #f70;}
+    #cate h3{ font-size: 14px; height: 30px; line-height: 30px; text-align: center; background: #f80; color: #fff;}
+    #cate li{ padding-left: 10px; border-top: 1px solid #f90;}
+    .show ,.edit{ height: 40px; line-height: 40px;}
+    .show span{ float: left; margin-right: 10px;}
+    .show a{ display: inline-block; width: 16px; height: 16px; background: url(img/edit.png) no-repeat; text-indent: -9999px; margin-top: 10px; position: absolute; right: 10px;}
+    .show{ position: relative;}
+    .edit{ display: none;}
+    .edit input{ background: #fff; border: 1px solid #ccc; height: 20px; line-height: 20px; padding: 2px 5px; outline: none;}
+    .edit a{ background: #999; color: #fff; padding: 5px 6px; border-radius: 2px;}
+    .edit a.cancel{ background: #aaa; -webkit-transition: all .3s; transition: all .3s;}
+    .edit a.save{ background: #22ac38; -webkit-transition: all .3s; transition: all .3s;}
+    .edit a.cancel:hover{ background: #999;}
+    .edit a.save:hover{ background: #19952e;}
+    </style>
+    <script>
+    window.onload = function(){
+
+        var oUl = document.getElementById('list');
+        var aLi = oUl.getElementsByTagName('li');
+
+        // 函数传参
+        function changeValue(oLi){
+            
+            var aDiv = oLi.getElementsByTagName('div');
+            var oSpan = oLi.getElementsByTagName('span')[0];
+            var aA = oLi.getElementsByTagName('a');
+            var oInput = oLi.getElementsByTagName('input')[0];
+
+            // 点击铅笔编辑
+            aA[0].onclick = function(){
+                aDiv[0].style.display = 'none';
+                aDiv[1].style.display = 'block';
+                oInput.value = oSpan.innerHTML;
+            };
+
+            // 点击保存
+            aA[1].onclick = function(){
+                aDiv[0].style.display = 'block';
+                aDiv[1].style.display = 'none';
+                oSpan.innerHTML = oInput.value;
+            };
+
+            // 点击取消
+            aA[2].onclick = function(){
+                aDiv[0].style.display = 'block';
+                aDiv[1].style.display = 'none';
+            };
+        };
+
+        // 函数调用
+        for(var i=0; i<aLi.length; i++){
+            changeValue(aLi[i]);
+        }
+    };
+    </script>
+</head>
+<body>
+    <div id="cate">
+        <h3>修改文本框的值</h3>
+        <ul id="list">
+            <li>
+                <div class="show">
+                    <span>龟派气功波</span>
+                    <a href="#">编辑</a>
+                </div>
+                <div class="edit">
+                    <input type="text" />
+                    <a class="save" href="#">保存</a>
+                    <a class="cancel" href="#">取消</a>
+                </div>
+            </li>
+            <li>
+                <div class="show">
+                    <span>十倍界王拳</span>
+                    <a href="#">编辑</a>
+                </div>
+                <div class="edit">
+                    <input type="text" />
+                    <a class="save" href="#">保存</a>
+                    <a class="cancel" href="#">取消</a>
+                </div>
+            </li>
+            <li>
+                <div class="show">
+                    <span>超级元气弹</span>
+                    <a href="#">编辑</a>
+                </div>
+                <div class="edit">
+                    <input type="text" />
+                    <a class="save" href="#">保存</a>
+                    <a class="cancel" href="#">取消</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
