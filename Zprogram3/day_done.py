@@ -6,7 +6,7 @@ from webbrowser import open as browseropen
 
 #读取需要打开的网页
 def get_web_list():
-    with open('D:\python3.6.1\Zprogram3\day_done.txt','r') as f:
+    with open('D:\GitHub\My_python\Zprogram3\day_done.txt','r') as f:
         i=0
         lst=[]
         while(i!=''):
