@@ -1,5 +1,6 @@
 import shutil
 import os
+import re
 
 # 复制文件夹下的所有文件
 def move_folder_file(src, dst, include_folder=False):
@@ -19,10 +20,20 @@ def move_folder_file(src, dst, include_folder=False):
         elif include_folder:
             move_folder_file(src+"/"+file, dst+"/"+file)
 
-name = "tp_spear_hades"
-#从Pictures/spears下copy出一个folder1
-def step():
-    path = "D://jhkf//Pictures/tech_prince/spears/"
+def replace_word(src, old, new):
+    f = open(src, "r")
+    lines = f.readlines()
+    f.close()
+    f = open(src, "w+")
+    for line in lines:
+        new_line = re.sub(old, new, line)
+        f.writelines(new_line)
+    f.close()
+
+
+#从ModPictures/spears下copy出一个folder1
+def step(name):
+    path = "D://jhkf//ModPictures/tech_prince/spears/"
     src = path+"tp_spear_valkyrie"
     dst = path+name
     # 创建目标文件夹
@@ -34,7 +45,7 @@ def step():
     os.rename(img_src, dst_src)
 
 #从zitem/spears下copy出一个folder2（记得修改scml文件）
-def step2():
+def step2(name):
     # name = "tp_spear_hades"
     path = "D://steam/steamapps/common/Don't Starve Mod Tools/mod_tools/Spriter/zitem/spears/"
     src = path+"tp_spear_valkyrie"
@@ -44,6 +55,8 @@ def step2():
     move_folder_file(src, dst, True)
     # 重命名scml文件
     os.rename(dst+"/tp_spear_valkyrie.scml", dst+"/"+name+".scml")
+    # 修改scml文件
+    replace_word(dst+"/"+name+".scml", "tp_spear_valkyrie", name)
     # folder = [
     #     "/item",
     #     "/item_water",
@@ -55,9 +68,9 @@ def step2():
     #     move_folder_file(src+i, dst+i)
 
 #将folder1的文件移动到folder2/inven的对应位置
-def step3():
+def step3(name):
     # name = "tp_spear_hades"
-    path1 = "D://jhkf//Pictures/tech_prince/spears/"
+    path1 = "D://jhkf//ModPictures/tech_prince/spears/"
     path2 = "D://steam/steamapps/common/Don't Starve Mod Tools/mod_tools/Spriter/zitem/spears/"
     src = path1+name+"/"
     dst = path2+name+"/"
@@ -77,11 +90,11 @@ def step3():
         shutil.copy(s[i], d[i])
 
 #从完成的folder2和inven里的文件复制到mod里
-def step4():
+def step4(name):
     # name = "tp_spear_hades"
     path1 = "D://steam/steamapps/common/Don't Starve Mod Tools/mod_tools/Spriter/zitem/spears/"
     path2 = "D://steam/steamapps/common/dont_starve/mods/tech_prince/exported/"
-    path3 = "D://jhkf//Pictures/tech_prince/spears/inven/"
+    path3 = "D://jhkf//ModPictures/tech_prince/spears/inven/"
     path4 = "D://steam/steamapps/common/dont_starve/mods/tech_prince/images/inventoryimages/"
     src = path1+name
     dst = path2+name
@@ -93,7 +106,7 @@ def step4():
     move_folder_file(src, dst, True)
 
 # 清除exported下所有文件
-def step5():
+def step5(name):
     path = "D://steam/steamapps/common/dont_starve/mods/tech_prince/exported"
     file_list = os.listdir(path)
     for file in file_list:
@@ -104,7 +117,7 @@ def step5():
         shutil.rmtree(path+"/"+file, True)
 
 # 清楚inventoryimages下所有png文件
-def step6():
+def step6(name):
     path = "D://steam/steamapps/common/dont_starve/mods/tech_prince/images/inventoryimages"
     file_list = os.listdir(path)
 
@@ -117,10 +130,10 @@ def step6():
             os.remove(path+"/"+file)
 
 if __name__ == "__main__":
-    #从Pictures/spears下copy出一个folder1
+    #从ModPictures/spears下copy出一个folder1
     #从zitem/spears下copy出一个folder2（记得修改scml文件）
     #将folder1的文件移动到folder2/inven的对应位置
     #从完成的folder2和inven里的文件复制到mod里
     # 清除exported下所有文件
     # 清楚inventoryimages下所有png文件
-    step6()
+    
