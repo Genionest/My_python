@@ -76,6 +76,17 @@ def publish_tech_prince():
         print(src+f+".lua")
         one_line(src+f+".lua", dst+f+".lua")
 
+def publish_will_tech():
+    src = "D://steam/steamapps/common/dont_starve/mods/will_tech_publish/"
+    dst = "D://steam/steamapps/common/dont_starve/mods/will_tech_publish/"
+    files = ["main", "modimport", "scripts"]
+    lua_files = ["modmain", "modworldgenmain"]
+    for f in files:
+        publish(src+f, dst+f)
+    for f in lua_files:
+        print(src+f+".lua")
+        one_line(src+f+".lua", dst+f+".lua")
+
 def lock(src, dst):
     file_list = os.listdir(src)
     for ff in file_list:
@@ -128,7 +139,7 @@ def replace_word(src, old, new):
     f.close()
 
 def step(form, name, style):
-    path = "D://jhkf//ModPictures/tech_prince/"+form+"/"
+    path = "D://jhkf//ModPictures/will_tech/"+form+"/"
     src = path+style
     dst = path+name
     move_folder_file(src, dst)
@@ -169,7 +180,7 @@ def potion_step2(name, style):
 
 #将folder1的文件copy到folder2/inven的对应位置
 def spear_step3(name, style=None):
-    path1 = "D://jhkf//ModPictures/tech_prince/spears/"
+    path1 = "D://jhkf//ModPictures/will_tech/spears/"
     path2 = "D://steam/steamapps/common/Don't Starve Mod Tools/mod_tools/Spriter/zitem/spears/"
     src = path1+name+"/"
     dst = path2+name+"/"
@@ -189,7 +200,7 @@ def spear_step3(name, style=None):
         shutil.copy(s[i], d[i])
 
 def hat_step3(name, style=None):
-    path1 = "D://jhkf//ModPictures/tech_prince/hats/"
+    path1 = "D://jhkf//ModPictures/will_tech/hats/"
     path2 = "D://steam/steamapps/common/Don't Starve Mod Tools/mod_tools/Spriter/zitem/hats/"
     src = path1+name+"/"
     dst = path2+name+"/"
@@ -205,7 +216,7 @@ def hat_step3(name, style=None):
     shutil.copy(s3, d3)
 
 def potion_step3(name, style):
-    path1 = "D://jhkf//ModPictures/tech_prince/potions/"
+    path1 = "D://jhkf//ModPictures/will_tech/potions/"
     path2 = "D://steam/steamapps/common/Don't Starve Mod Tools/mod_tools/Spriter/zitem/potions/"
     src = path1+name+"/"
     dst = path2+name+"/"
@@ -218,9 +229,9 @@ def potion_step3(name, style):
 
 def step4(form, name, style=None):
     path1 = "D://steam/steamapps/common/Don't Starve Mod Tools/mod_tools/Spriter/zitem/"+form+"/"
-    path2 = "D://steam/steamapps/common/dont_starve/mods/tech_prince/exported/"
-    path3 = "D://jhkf//ModPictures/tech_prince/"+form+"/inven/"
-    path4 = "D://steam/steamapps/common/dont_starve/mods/tech_prince/images/inventoryimages/"
+    path2 = "D://steam/steamapps/common/dont_starve/mods/will_tech/exported/"
+    path3 = "D://jhkf//ModPictures/will_tech/"+form+"/inven/"
+    path4 = "D://steam/steamapps/common/dont_starve/mods/will_tech/images/inventoryimages/"
     src = path1+name
     dst = path2+name
     img_src = path3+name+".png"
@@ -240,7 +251,7 @@ def potion_step4(name, style=None):
 
 # 清除exported下所有文件
 def step5(name=None, style=None):
-    path = "D://steam/steamapps/common/dont_starve/mods/tech_prince/exported"
+    path = "D://steam/steamapps/common/dont_starve/mods/will_tech/exported"
     file_list = os.listdir(path)
     for file in file_list:
         ret = os.path.splitext(file)
@@ -251,7 +262,7 @@ def step5(name=None, style=None):
 
 # 清楚inventoryimages下所有png文件
 def step6(name=None, style=None):
-    path = "D://steam/steamapps/common/dont_starve/mods/tech_prince/images/inventoryimages"
+    path = "D://steam/steamapps/common/dont_starve/mods/will_tech/images/inventoryimages"
     file_list = os.listdir(path)
 
     for file in file_list:
@@ -271,4 +282,4 @@ if __name__ == "__main__":
     # 清除exported下所有文件
     # 清楚inventoryimages下所有png文件
 
-    # publish_tech_prince()
+    publish_will_tech()
