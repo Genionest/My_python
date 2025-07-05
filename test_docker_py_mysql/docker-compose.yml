@@ -1,0 +1,56 @@
+# Docker Compose 文件格式版本
+version: '3.8'
+
+# 定义要运行的容器服务
+services: 
+  mysql:
+    # 使用官方 MySQL 8.0 镜像
+    image: mysql:8.0
+    # 容器命名为 mysql_db（在容器网络中可通过此名访问）
+    container_name: mysql_db
+    # 环境变量配置
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    # 端口映射：主机  → 容器 
+    ports:
+      - "3307:3306"
+    # 数据卷挂载
+    volumes:
+      # 持久化存储数据库文件
+      - mysql_data:/var/lib/mysql
+      # 初始 SQL 脚本
+      # 数据库初始化时，会执行/docker-entrypoint-initdb.d/下面的文件
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    # 健康检查（确保 MySQL 完全启动）
+    healthcheck:
+      # 检查命令
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      # 单次检查超时时间
+      timeout: 20s
+      # 最大重试次数
+      retries: 10
+
+  python_app:
+    # 从 ./backend 目录构建自定义镜像, 根据目录中的Dockerfile构建
+    build: ./backend
+    # 容器命名为 py_app
+    container_name: py_app
+    # 挂载代码目录（开发环境热重载）
+    volumes:
+      # 本地代码 ↔ 容器内/app目录实时同步
+      # 本地代码修改实时同步到容器
+      - ./backend:/app
+    # 端口映射：主机 5000 → 容器 5000
+    ports:
+      - "5000:5000"
+    # 依赖管理（仅在 MySQL 健康时启动）
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+# 定义持久化数据卷
+volumes:
+  mysql_data:
